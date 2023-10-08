@@ -2,6 +2,7 @@ let input = document.getElementById("input");
 let addBtn = document.getElementById("add");
 let list = document.getElementById("list");
 let clear = document.getElementById("clear");
+let change = document.getElementById("change");
 
 let getLocalStorage = () => {
   return localStorage.getItem("users")
@@ -12,6 +13,7 @@ function addUser(user) {
   let newUser = {
     userName: user,
     userId: Math.floor(Math.random() * 10000),
+    edit: false,
   };
   let item = getLocalStorage();
   item.push(newUser);
@@ -56,12 +58,6 @@ window.addEventListener("DOMContentLoaded", () => {
       deleteItem(elementId);
     });
   }
-  for (let i = 0; i < editer.length; i++) {
-    editer[i].addEventListener("click", (e) => {
-      input.value = users[i].userName;
-    });
-  }
-
   let users = getLocalStorage();
   function deleteItem(id) {
     console.log(id);
@@ -69,7 +65,10 @@ window.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("users", JSON.stringify(newItems));
     location.reload(true);
   }
-  function editItem(id) {
-    // input.value = id;
+  for (let i = 0; i < editer.length; i++) {
+    editer[i].addEventListener("click", (e) => {
+      input.value = users[i].userName;
+      deleteItem(elementId);
+    });
   }
 });
